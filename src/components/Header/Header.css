@@ -1,0 +1,12 @@
+.Header {
+    background-color: #7b8bac;
+    width: 100%;
+    height: 64px;
+    display: flex;
+    align-items: center;
+}
+
+.Header_h1 {
+    margin: 0 24px 0 24px;
+    line-height: 16px;
+}

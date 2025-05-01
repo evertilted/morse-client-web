@@ -1,0 +1,100 @@
+.Auth_outer-box {
+    width: 16em;
+    margin: 196px auto 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Auth_form {
+    width: 100%;
+    height: fit-content;
+    padding: 8px 0;
+    background-color: #fdfeff;
+    color: black;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Auth_form-title {
+    font-size: 24px;
+}
+
+.Auth_inputs-box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+input::placeholder {
+    color: white;
+}
+
+.Auth_input-text {
+    width: 90%;
+    margin: 4px 0;
+    padding: 4px;
+    border: none;
+    border-radius: 5px;
+    background-color: #7b8bac;
+    color: white;
+    font-size: 18px;
+    transition: all 0.3s ease;
+}
+
+.input-error {
+    border-color: #ff4444 !important;
+    box-shadow: 0 0 3px 3px rgba(255, 68, 68, 0.4);
+    animation: shake 0.5s;
+  }
+  
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+
+.Auth_sign-in-button {
+    font-size: 16px;
+}
+
+.Auth_register-button {
+    font-size: 14px;
+    background-color: rgba(55, 71, 102, 0);
+    color: #374766;
+    text-decoration: underline;
+}
+
+.Auth_register-button:hover {
+    cursor: pointer;
+    background-color: rgba(55, 71, 102, 0);
+    color: #3747aa;
+}
+
+.Auth_status-box {
+    width: 100%;
+    margin: 8px 0 0 0;
+    border-radius: 0 0 5px 5px;
+}
+
+.Auth_status-box_loading {
+    background-color: #7b8bac;
+}
+
+.Auth_status-box_error {
+    background-color: #ff0000;
+}
+
+.Auth_status-title {
+    font-size: 14px;
+}
+
+.Auth_error-message {
+    font-size: 14px;
+}
