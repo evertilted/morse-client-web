@@ -22,3 +22,35 @@ button:hover {
   cursor: pointer;
   background-color: #3747aa;
 }
+
+.loading-animation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #09f;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error-message {
+  width: fit-content;
+  margin: 380px auto 0 auto;
+  text-align: center;
+  padding: 15px;
+  border-radius: 5px;
+  background-color: #fdfeff;
+  color: black;
+}

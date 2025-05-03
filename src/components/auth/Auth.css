@@ -78,13 +78,16 @@ input::placeholder {
 }
 
 .Auth_status-box {
-    width: 100%;
-    margin: 8px 0 0 0;
-    border-radius: 0 0 5px 5px;
+    position: absolute;
+    width: 16em;
+    max-height: 3em;
+    margin: 19em 0 0 0;
+    border-radius: 0 0 10px 10px;
+    overflow: hidden;
 }
 
-.Auth_status-box_loading {
-    background-color: #7b8bac;
+.Auth_loading-animation {
+    position: absolute;
 }
 
 .Auth_status-box_error {

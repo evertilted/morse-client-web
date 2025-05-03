@@ -4,6 +4,7 @@ import '../../App.css'
 import './Auth.css'
 import { API_User } from '../../api/endpoints/API_User'
 import axios from 'axios'
+import { Encrypt } from '../../Encryptor'
 
 // Типы для TypeScript
 type AuthErrorFields = {
@@ -11,9 +12,12 @@ type AuthErrorFields = {
   password: boolean;
 };
 
+type AuthProps = {
+  clientEncryptionKey: string | null
+}
 type AuthMode = 'login' | 'register';
 
-const Auth = () => {
+const Auth = ({ clientEncryptionKey }: AuthProps) => {
   const [credentials, setCredentials] = useState({
     login: '',
     password: ''
@@ -61,9 +65,14 @@ const Auth = () => {
     setIsLoading(true);
 
     try {
+      const encryptedCredentials = {
+        login: Encrypt(credentials.login, clientEncryptionKey),
+        password: Encrypt(credentials.password, clientEncryptionKey)
+      }
+
       const response = (mode === 'login') 
-        ? await API_User.Login(credentials) 
-        : await API_User.Register(credentials) 
+        ? await API_User.Login(encryptedCredentials) 
+        : await API_User.Register(encryptedCredentials) 
 
       localStorage.setItem('login', response.login);
       localStorage.setItem('accessToken', response.accessToken.token);
@@ -76,17 +85,29 @@ const Auth = () => {
 
   const handleAuthError = (error: unknown) => {
     if (axios.isAxiosError(error)) {
-      setAuthError(error.response?.data ?? 'Request failed');
+      setAuthError(error.response?.data ?? 'Unexpected authentication error');
     } else {
       setAuthError('An unexpected error occurred');
     }
   };
 
   return (
-    <div className="Auth_outer-box">
+    <div className='Auth_outer-box'>
+      {
+        isLoading && 
+        <div className="loading-animation Auth_loading-animation">
+          <div className="spinner"></div>
+        </div>
+      }
+      {
+        authError &&
+        <div className="Auth_status-box Auth_status-box_error">
+          <p className="Auth_error-message">{authError}</p>
+        </div>
+      }
+
       <div className="Auth_form">
         <h2 className="Auth_form-title">Please sign in</h2>
-        
         <div className="Auth_inputs-box">
           <input
             type="text"
@@ -125,18 +146,6 @@ const Auth = () => {
           Register
         </button>
       </div>
-
-      {isLoading && (
-        <div className="Auth_status-box Auth_status-box_loading">
-          <h2 className="Auth_status-title">Working on it...</h2>
-        </div>
-      )}
-      
-      {authError && (
-        <div className="Auth_status-box Auth_status-box_error">
-          <p className="Auth_error-message">{authError}</p>
-        </div>
-      )}
     </div>
   );
 };
