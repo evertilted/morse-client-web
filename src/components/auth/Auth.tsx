@@ -4,7 +4,6 @@ import '../../App.css'
 import './Auth.css'
 import { API_User } from '../../api/endpoints/API_User'
 import axios from 'axios'
-import { Encrypt } from '../../Encryptor'
 
 // Типы для TypeScript
 type AuthErrorFields = {
@@ -12,12 +11,9 @@ type AuthErrorFields = {
   password: boolean;
 };
 
-type AuthProps = {
-  clientEncryptionKey: string | null
-}
 type AuthMode = 'login' | 'register';
 
-const Auth = ({ clientEncryptionKey }: AuthProps) => {
+const Auth = () => {
   const [credentials, setCredentials] = useState({
     login: '',
     password: ''
@@ -65,14 +61,9 @@ const Auth = ({ clientEncryptionKey }: AuthProps) => {
     setIsLoading(true);
 
     try {
-      const encryptedCredentials = {
-        login: Encrypt(credentials.login, clientEncryptionKey),
-        password: Encrypt(credentials.password, clientEncryptionKey)
-      }
-
       const response = (mode === 'login') 
-        ? await API_User.Login(encryptedCredentials) 
-        : await API_User.Register(encryptedCredentials) 
+        ? await API_User.Login(credentials) 
+        : await API_User.Register(credentials) 
 
       localStorage.setItem('login', response.login);
       localStorage.setItem('accessToken', response.accessToken.token);

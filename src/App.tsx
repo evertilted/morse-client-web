@@ -8,28 +8,15 @@ import { API_Encryption } from './api/endpoints/API_Encryption';
 function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
-  const [clientEncryptionKey, setClientEncryptionKey] = useState(null)
 
   useEffect(() => {
-    const getClientEncryptionKey = async () => {
-      try {
-        const response = await API_Encryption.ClientEncryptionKey()
-        setClientEncryptionKey(response)
-      }
-      catch (error: unknown) {
-        setError('Authentication service is unreacheable');
-      }
-      finally {
-        setIsLoading(false)
-      }
-    }
-    getClientEncryptionKey()
+
   }, [])
 
   const router = createBrowserRouter([
     {
       path: '/auth',
-      element: <Auth clientEncryptionKey={clientEncryptionKey} />
+      element: <Auth />
     },
   ])
 
