@@ -1,8 +1,9 @@
-import { useState } from 'react';
-import axios from 'axios';
-import { endpoint_login, endpoint_register } from '../../api/security-server/endpoints';
-import '../../App.css';
-import './Auth.css';
+import { useState } from 'react'
+import '../../api/endpoints/API_User'
+import '../../App.css'
+import './Auth.css'
+import { API_User } from '../../api/endpoints/API_User'
+import axios from 'axios'
 
 // Типы для TypeScript
 type AuthErrorFields = {
@@ -60,15 +61,12 @@ const Auth = () => {
     setIsLoading(true);
 
     try {
-      const endpoint = mode === 'login' ? endpoint_login : endpoint_register;
-      
-      const response = await axios.post(endpoint, credentials, {
-        headers: { 'Content-Type': 'application/json' }
-      });
+      const response = (mode === 'login') 
+        ? await API_User.Login(credentials) 
+        : await API_User.Register(credentials) 
 
-      localStorage.setItem('login', response.data.login);
-      localStorage.setItem('accessToken', response.data.accessToken.token);
-      
+      localStorage.setItem('login', response.login);
+      localStorage.setItem('accessToken', response.accessToken.token);
     } catch (error) {
       handleAuthError(error);
     } finally {
