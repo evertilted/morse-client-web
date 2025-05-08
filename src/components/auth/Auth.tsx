@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import '../../api/endpoints/API_User'
 import '../../App.css'
 import './Auth.css'
 import { API_User } from '../../api/endpoints/API_User'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
-// Типы для TypeScript
 type AuthErrorFields = {
   login: boolean;
   password: boolean;
@@ -14,18 +14,24 @@ type AuthErrorFields = {
 type AuthMode = 'login' | 'register';
 
 const Auth = () => {
+  const navigate = useNavigate()
+
   const [credentials, setCredentials] = useState({
     login: '',
     password: ''
   });
-  
   const [errorFields, setErrorFields] = useState<AuthErrorFields>({
     login: false,
     password: false
   });
-  
   const [isLoading, setIsLoading] = useState(false);
   const [authError, setAuthError] = useState('');
+
+  useEffect(() => {
+    if (localStorage.getItem('accessToken') != null) {
+      navigate('/')
+    }
+  }, [])
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
@@ -38,7 +44,7 @@ const Auth = () => {
     setCredentials(prev => ({ ...prev, [fieldName]: value }));
   };
 
-  const validateForm = (): boolean => {
+  const validateCredentials = (): boolean => {
     const errors = {
       login: credentials.login.length === 0,
       password: credentials.password.length === 0
@@ -55,7 +61,7 @@ const Auth = () => {
   };
 
   const handleAuth = async (mode: AuthMode) => {
-    if (!validateForm()) return;
+    if (!validateCredentials()) return;
     
     setAuthError('');
     setIsLoading(true);
@@ -67,6 +73,7 @@ const Auth = () => {
 
       localStorage.setItem('login', response.login);
       localStorage.setItem('accessToken', response.accessToken.token);
+      navigate('/');
     } catch (error) {
       handleAuthError(error);
     } finally {

@@ -12,7 +12,13 @@ const Register = async (credentials: Object) => {
     return API.Post(url, credentials)
 }
 
+const ValidateJWT = async () => {
+    let url = `${security_root}/${security_endpoints.ValidateJWT}`
+    return API.Post(url)
+}
+
 export const API_User = {
     Login: Login,
-    Register: Register
+    Register: Register,
+    ValidateJWT: ValidateJWT
 }

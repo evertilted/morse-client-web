@@ -9,11 +9,10 @@ export const security_root: string = `${security_server.protocol}://${security_s
 
 const security_controllers = {
     Authentication: 'Authentication',
-    Encryption: 'Encryption'
 }
 
 export const security_endpoints = {
-    Login: `${security_controllers.Authentication}/login`,
-    Register: `${security_controllers.Authentication}/register`,
-    ClientEncryptionKey: `${security_controllers.Encryption}/clientEncryptionKey`
+    Login: `${security_controllers.Authentication}/Login`,
+    Register: `${security_controllers.Authentication}/Register`,
+    ValidateJWT: `${security_controllers.Authentication}/ValidateJWT`
 }

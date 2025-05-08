@@ -1,7 +1,10 @@
 import axios, { AxiosResponse, AxiosError } from 'axios'
 
 const config = {
-    headers: { 'Content-Type': 'application/json' }
+    headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+     }
 }
 
 const Get = async (url: string, data?: object) => {
@@ -15,7 +18,7 @@ const Get = async (url: string, data?: object) => {
     }
 }
 
-const Post = async (url: string, data: object) => {
+const Post = async (url: string, data?: object) => {
     try {
         const response: AxiosResponse = await axios.post(url, data, config)
         return response.data
