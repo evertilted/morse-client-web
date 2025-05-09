@@ -1,32 +1,61 @@
-import { useEffect } from 'react'
-import { signalRService, FriendRequest } from '../../../api/SignalRService';
+import { useEffect, useState } from 'react'
 import './ProfileSidebar.css'
+import { HubConnection } from '@microsoft/signalr'
+import { UserSearchResult } from './UserSearchResult'
+import UserSearchItem from './UserSearchItem/UserSearchItem'
 
-function ProfileSidebar() {
+type ProfileSidebarProps = {
+    callHubConnection: HubConnection | null
+}
 
-    const FriendComponent: React.FC = () => {
-        useEffect(() => {
-          const handleFriendRequest = (user: FriendRequest, message: string) => {
-            console.log("New friend request from:", user);
-            alert(`${user.username} sent you a friend request!`);
-          };
-      
-          signalRService.startConnection();
-          signalRService.setupFriendRequestListener(handleFriendRequest);
-      
-          return () => {
-            signalRService.connection.off("ReceiveFriendRequest");
-            signalRService.stopConnection();
-          };
-        }, []);
-      
-        const handleSendRequest = () => {
-          signalRService.sendFriendRequest("123"); // ID получателя
-        };
+function ProfileSidebar({ callHubConnection }: ProfileSidebarProps) {
+    const [foundUsers, setFoundUsers] = useState<UserSearchResult[]>([])
+
+    useEffect(() => {
+        callHubConnection?.on('ReceiveUserSearchResult', function(users: UserSearchResult[]) {
+            setFoundUsers(users)
+        })
+    }, [callHubConnection])
+
+    const handleUserSearch = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        let searchBy = event.target.value
+
+        if (searchBy && callHubConnection != null) {
+            try {
+                let uidString = localStorage.getItem('userId')
+                
+                if (uidString) {
+                    let uid = parseInt(uidString)
+                    await callHubConnection.invoke('FindUserByLogin', uid, searchBy)
+                }
+            }
+            catch {
+                setFoundUsers([])
+            }
+        }
+        else {
+            setFoundUsers([])
+        }
+    }
 
     return (
         <div className="ProfileSidebar_outer-box">
             <h1 className='ProfileSidebar_username'>{localStorage.getItem('login')}</h1>
+            <hr />
+
+            <div className='ProfileSidebar_UserSearchBox'>
+                <input 
+                    type='Text' 
+                    className='ProfileSidebar_UserSearchBox_Input' 
+                    placeholder='Search users'
+                    onChange={(e) => handleUserSearch(e)} />
+
+                <div className='ProfileSidebar_UserSearchBox_ResultBox'>
+                    { foundUsers.length == 0 
+                    ? <h2> No users found </h2> 
+                    : foundUsers.map(user => <UserSearchItem id={user.id} login={user.login} displayName={user.displayName} key={user.id} />)}
+                </div>
+            </div>
         </div>
     )
 }

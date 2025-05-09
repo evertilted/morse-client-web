@@ -29,9 +29,8 @@ const service_server = {
 
 export const service_root: string = `${service_server.protocol}://${service_server.ip}:${service_server.port}/${service_server.api_root}`
 
-const service_hub_root: string = `${service_root}/hubs`
 export const service_hubs = {
-    FriendRequest: `${service_hub_root}/FriendRequest`
+    Call: `${service_root}/Call`
 }
 
 const service_controllers = {

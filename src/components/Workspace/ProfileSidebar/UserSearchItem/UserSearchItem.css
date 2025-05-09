@@ -1,0 +1,7 @@
+.UserSearchItem_box {
+    width: 90%;
+    margin: 4px auto;
+    overflow: hidden;
+    border-radius: 5px;
+    box-shadow: 0 0 5px white;
+}
