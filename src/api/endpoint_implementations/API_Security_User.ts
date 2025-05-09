@@ -1,5 +1,5 @@
-import '../../api-config'
-import { security_endpoints, security_root } from '../../api-config'
+import '../api-config'
+import { security_endpoints, security_root } from '../api-config'
 import { API } from '../APICaller'
 
 const Login = async (credentials: Object) => {
@@ -17,7 +17,7 @@ const ValidateJWT = async () => {
     return API.Post(url)
 }
 
-export const API_User = {
+export const API_Security_User = {
     Login: Login,
     Register: Register,
     ValidateJWT: ValidateJWT

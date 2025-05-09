@@ -1,0 +1,13 @@
+.ProfileSidebar_outer-box {
+    width: 15em;
+    min-width: fit-content;
+    height: 100%;
+    background-color: #202b42;
+    box-shadow: 0 0 5px black;
+}
+
+.ProfileSidebar_username {
+    margin: 0;
+    padding: 0;
+    text-decoration: underline;
+}

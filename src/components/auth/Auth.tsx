@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import '../../api/endpoints/API_User'
+import '../../api/endpoint_implementations/API_Security_User'
 import '../../App.css'
 import './Auth.css'
-import { API_User } from '../../api/endpoints/API_User'
+import { API_Security_User } from '../../api/endpoint_implementations/API_Security_User'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
@@ -28,7 +28,7 @@ const Auth = () => {
   const [authError, setAuthError] = useState('');
 
   useEffect(() => {
-    if (localStorage.getItem('accessToken') != null) {
+    if (localStorage.getItem('accessToken')) {
       navigate('/')
     }
   }, [])
@@ -68,10 +68,11 @@ const Auth = () => {
 
     try {
       const response = (mode === 'login') 
-        ? await API_User.Login(credentials) 
-        : await API_User.Register(credentials) 
+        ? await API_Security_User.Login(credentials) 
+        : await API_Security_User.Register(credentials) 
 
       localStorage.setItem('login', response.login);
+      localStorage.setItem('userId', response.id)
       localStorage.setItem('accessToken', response.accessToken.token);
       navigate('/');
     } catch (error) {
