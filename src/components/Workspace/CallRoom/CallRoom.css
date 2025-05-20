@@ -1,0 +1,47 @@
+.Callroom_outbox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.Callroom_join_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.Callroom_create_button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.Callroom_join_code_form {
+    display: flex;
+    gap: 10px;
+}
+
+.Callroom_join_code_Input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.Callroom_active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.Callroom_participants {
+    border: 1px solid #eee;
+    padding: 15px;
+    border-radius: 8px;
+    min-width: 200px;
+}

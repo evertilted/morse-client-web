@@ -1,4 +1,11 @@
 .Workspace_outer-box {
-    width: 100%;
+    width: 100vw;
     height: fit-content;
+    display: flex;
+}
+
+.Workspace_room-zone {
+    width: 80%;
+    height: fit-content;
+    margin: 0 auto;
 }

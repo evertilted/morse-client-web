@@ -16,6 +16,7 @@ button {
   border-radius: 5px;
   background-color: #374766;
   color: white;
+  box-shadow: 0 0 3px black;
 }
 
 button:hover {
